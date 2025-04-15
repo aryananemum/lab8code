@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course.name }} - Class Roster</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>{{ course.name }} - Roster</h1>
+        <a href="/teacher-classes" class="home-button">Back to My Classes</a>
+    </header>
+
+    <main class="container">
+        <div class="login-box">
+            <h2>Students Enrolled</h2>
+            {% if enrollments %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Grade</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enrollment in enrollments %}
+                    <tr>
+                        <td>{{ enrollment.student_name }}</td>
+                        <td>
+                            <form action="/edit-grade/{{ enrollment.id }}" method="POST">
+                                <input type="number" name="grade" value="{{ enrollment.grade }}" min="0" max="100"
+                                    required>
+                        </td>
+                        <td>
+                            <button type="submit" class="signin-button">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No students are enrolled in this class yet.</p>
+            {% endif %}
+        </div>
+    </main>
+</body>
+
+</html>

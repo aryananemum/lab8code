@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #9e558f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .tab-button.active,
+        .tab-button:hover {
+            background-color: #78436e;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome, {{ current_user.username }}</h1>
+        <a href="/logout" class="home-button">Logout</a>
+    </header>
+
+    <main class="container">
+        <div class="login-box">
+            <h2>Your Classes</h2>
+
+            {% if courses %}
+            <div class="tabs">
+                {% for course in courses %}
+                <button class="tab-button" onclick="showTab('{{ course.id }}')" id="tab-btn-{{ course.id }}">
+                    {{ course.name }}
+                </button>
+                {% endfor %}
+            </div>
+
+            {% for course in courses %}
+            <div class="tab-content" id="tab-{{ course.id }}">
+                <h3>{{ course.name }} - Students</h3>
+                {% if course.enrollments %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Grade</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for e in course.enrollments %}
+                        <tr>
+                            <td>{{ e.student_name }}</td>
+                            <td>
+                                <form action="/edit-grade/{{ e.id }}" method="POST">
+                                    <input type="number" name="grade" value="{{ e.grade }}" min="0" max="100" required>
+                            </td>
+                            <td>
+                                <button type="submit" class="signin-button">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No students enrolled in this class.</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>You are not assigned to any classes.</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <script>
+        function showTab(id) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            // Show the selected tab
+            document.getElementById('tab-' + id).classList.add('active');
+            document.getElementById('tab-btn-' + id).classList.add('active');
+        }
+
+        // Auto-click first tab on page load
+        window.onload = function () {
+            const firstTab = document.querySelector('.tab-button');
+            if (firstTab) firstTab.click();
+        };
+    </script>
+</body>
+
+</html>

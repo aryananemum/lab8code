@@ -1,0 +1,78 @@
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    text-align: center;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    color: #333333;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  select {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4A90E2;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #357ABD;
+  }
+
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 500;
+    color: #555;
+    text-align: left;
+  }
+</style>
+
+<form action="/login" method="POST">
+  <h2>Login to ACME University</h2>
+
+  <input type="text" name="username" placeholder="Username" required>
+  <input type="password" name="password" placeholder="Password" required>
+
+  <label for="role">I am a:</label>
+  <select name="role" required>
+    <option value="">Select Role</option>
+    <option value="student">Student</option>
+    <option value="teacher">Teacher</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <br><br>
+  <button type="submit">Sign In</button>
+</form>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Dashboard</title>
+</head>
+<body>
+  <h1>Welcome Dr. {{ current_user.username }}!</h1>
+  <p>Here are your courses and student rosters.</p>
+
+  <h3>Your Classes</h3>
+  <ul>
+    {% for course in my_courses %}
+      <li>{{ course.name }}</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Optional: Add buttons for more functionality like editing grades -->
+  <a href="{{ url_for('logout') }}">Sign out</a>
+</body>
+</html>
